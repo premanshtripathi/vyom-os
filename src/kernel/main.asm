@@ -1,12 +1,19 @@
-org 0x7C00
+org 0x0
 bits 16
-
-; Tell the CPU to jump over our functions and start executing at 'main'
-start:
-    jmp main
 
 ; Define a newline character sequence (CRLF - carriage return + line feed) for printing to the screen
 %define ENDL 0x0D, 0x0A
+
+
+start:
+    ; print hello world message
+    mov si, msg_hello   ; point si to the string we want to print
+    call puts           ; print "Hello, World!" to the screen
+
+.halt:
+    cli
+    hlt
+
 
 ;
 ; Prints a string to the screen
@@ -34,25 +41,5 @@ puts:
     pop si
     ret
 
-main:
-    ; setup data segments
-    mov ax, 0           ; can't writte to ds/es directly, so we use ax as a temporary register
-    mov ds, ax
-    mov es, ax
 
-    ; setup stack
-    mov ss, ax
-    mov sp, 0x7C00      ; stack grows downwards from where we are loaded in memory, so we put it at start of our OS.
-                        ; If we put it at the end of our OS, we would overwrite our OS code when we push something to the stack.
-
-    mov si, msg_hello   ; point si to the string we want to print
-    call puts           ; print "Hello, World!" to the screen
-
-    hlt
-.halt:
-    jmp .halt
-
-msg_hello: db 'Hello, World!', ENDL, 0 ; null-terminated string (end of string is a null character - \0)
-
-times 510-($-$$) db 0
-dw 0AA55h
+msg_hello: db 'Hello, World!', ENDL, 0  ; null-terminated string (end of string is a null character - \0)
