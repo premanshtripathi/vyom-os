@@ -1,0 +1,7 @@
+build/
+*.img
+*.bin
+*.o
+
+.vscode/
+bx_enh_dbg.ini
