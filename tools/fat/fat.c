@@ -153,13 +153,13 @@ int main(int argc, char **argv){
     }
 
     if (!readFat(disk)) {
-        fprintf(stderr, "Coult not reaad FAT!\n");
+        fprintf(stderr, "Could not read FAT!\n");
         free(g_Fat);
         return -3;
     }
 
     if (!readRootDirectory(disk)) {
-        fprintf(stderr, "Coult not reaad FAT!\n");
+        fprintf(stderr, "Could not read FAT!\n");
         free(g_Fat);
         free(g_RootDirectory);
         return -4;
@@ -168,7 +168,7 @@ int main(int argc, char **argv){
     DirectoryEntry* fileEntry = findFile(argv[2]);
     
     if(!fileEntry) {
-        fprintf(stderr, "Coult not find file %s!\n", argv[2]);
+        fprintf(stderr, "Could not find file %s!\n", argv[2]);
         free(g_Fat);
         free(g_RootDirectory);
         return -5;
